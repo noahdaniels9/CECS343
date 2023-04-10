@@ -1,5 +1,6 @@
-from tenant import *
 def login():
+    print("Apartment Management System")
+    print()
     print("Log in required")
     print()
     print("Name: John")
@@ -10,6 +11,7 @@ def login():
         password = input("Password: ")
 
 def menu(user_input):
+    print()
     print("Please select what you would like to display:")
     print("1. Tenant List")
     print("2. Rental Income Record")
@@ -31,23 +33,35 @@ def main():
         user_input = menu(user_input)
         if (user_input == 1):
             print("Displaying Tenant List")
-            Tenant.display_tenants()
-            tOpt = input("Do you want to add or remove from tenant list? Press 1 for add, 2 for remove, and any other key for previous menu.")
-            if (tOpt == 1):
-                tname = str(input("Enter tenant name that you want to add:"))
-                troomnum = int(input("Enter tenant room number that you want to add:"))
-                Tenant.add_tenant(tname, troomnum)
-            elif (tOpt == 2):
-                remname = str(input("Enter the tenant name that you want to remove from the list"))
-                Tenant.remove_tenant(remname)
-            elif (tOpt != 1 and tOpt != 2):
-                menu(0)
+            #add display function for tenant list(tenant name, apartment number)
+            print()
+            print("1. add new tenant")
+            print("2. remove existing tenants")
+            print("3. return to main menu")
+            
         elif(user_input == 2):
             print("Displaying Rental Income record")
+            #add display function for rent income record(apartment number, respective rent)
+            print()
+            print("1. add new payment")
+            print("2. add new rooms")
+            print("3. remove existing room")
+            print("4. return to main menu")
+
         elif (user_input == 3):
             print("Displaying Expense Record")
+            #add display function for expense record(date, payee, amount, category)
+            print()
+            print("1. add new expense")
+            print("2. return to main menu")
+
         elif (user_input == 4):
             print("Displaying Annual Summary")
+            #add display function for annual summary(year, total income, total expense, profit/loss)
+            print("total profit/loss: ")
+            print()
+            #add option to choose from
+            print("1. return to main menu")
 
     print("Successfully Logged out!")
 
