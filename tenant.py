@@ -11,4 +11,8 @@ class Tenant:
         ten.update({tname: troomnum})
 
     def remove_tenant(remname):
-        ten.pop(remname)
+        if (remname in ten):
+            ten.pop(remname)
+        else:
+            print("Error: The tenant name you are looking for is not in the list.")
+        
