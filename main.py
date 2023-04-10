@@ -14,15 +14,17 @@ def login():
         password = input("Password: ")
 
 def menu(user_input):
-    print()
-    print("Please select what you would like to display:")
-    print("1. Tenant List")
-    print("2. Rental Income Record")
-    print("3. Expense Record")
-    print("4. Annual Summary")
-    print("5. Log Out")
-    user_input = int(input("Enter Input: "))
-    return user_input
+    try:
+        print("Please select what you would like to display:")
+        print("1. Tenant List")
+        print("2. Rental Income Record")
+        print("3. Expense Record")
+        print("4. Annual Summary")
+        print("5. Log Out")
+        user_input = int(input("Enter Input: "))
+        return user_input
+    except:
+        print("Error: invalid input.")
 
 
 def main():
@@ -37,22 +39,27 @@ def main():
         if (user_input == 1):
             print("Displaying Tenant List")
             Tenant.display_tenants()
-            print()
-            print("1. add new tenant")
-            print("2. remove existing tenants")
-            print("3. return to main menu")
-            
-            tOpt = input()
-            if (tOpt == 1):
-                tname = str(input("Enter tenant name that you want to add:"))
-                troomnum = int(input("Enter tenant room number that you want to add:"))
-                Tenant.add_tenant(tname, troomnum)
-            elif (tOpt == 2):
-                remname = str(input("Enter the tenant name that you want to remove from the list"))
-                Tenant.remove_tenant(remname)
-            elif (tOpt != 1 and tOpt != 2):
-                menu(0)
-            
+            tOpt = '1'
+            try:
+                while(tOpt == '1' or tOpt == '2'):
+                    print()
+                    print("1. add new tenant")
+                    print("2. remove existing tenants")
+                    print("3. return to main menu")
+
+                    tOpt = input()
+                    if (tOpt == '1'):
+                        tname = str(input("Enter tenant name that you want to add:"))
+                        troomnum = int(input("Enter tenant room number that you want to add:"))
+                        Tenant.add_tenant(tname, troomnum)
+                    elif (tOpt == '2'):
+                        remname = str(input("Enter the tenant name that you want to remove from the list"))
+                        Tenant.remove_tenant(remname)
+                    elif (tOpt != '1' and tOpt != '2'):
+                        break
+            except:
+                print("Error: invalid input.")
+                
         elif(user_input == 2):
             print("Displaying Rental Income record")
             #add display function for rent income record(apartment number, respective rent)
