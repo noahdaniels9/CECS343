@@ -1,3 +1,6 @@
+from tenant import *
+
+
 def login():
     print("Apartment Management System")
     print()
@@ -33,11 +36,22 @@ def main():
         user_input = menu(user_input)
         if (user_input == 1):
             print("Displaying Tenant List")
-            #add display function for tenant list(tenant name, apartment number)
+            Tenant.display_tenants()
             print()
             print("1. add new tenant")
             print("2. remove existing tenants")
             print("3. return to main menu")
+            
+            tOpt = input()
+            if (tOpt == 1):
+                tname = str(input("Enter tenant name that you want to add:"))
+                troomnum = int(input("Enter tenant room number that you want to add:"))
+                Tenant.add_tenant(tname, troomnum)
+            elif (tOpt == 2):
+                remname = str(input("Enter the tenant name that you want to remove from the list"))
+                Tenant.remove_tenant(remname)
+            elif (tOpt != 1 and tOpt != 2):
+                menu(0)
             
         elif(user_input == 2):
             print("Displaying Rental Income record")
