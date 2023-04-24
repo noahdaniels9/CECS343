@@ -43,14 +43,15 @@ def main():
             my_tenant.display_tenants()
             print()
             print("1. add new tenant\n2. remove existing tenants\n3. return to main menu")
-            tOpt = input()
+            tOpt = int(input("Enter Number: "))
             if (tOpt == 1):
                 tname = str(input("Enter tenant name that you want to add:"))
                 troomnum = int(input("Enter tenant room number that you want to add:"))
-                Tenant.add_tenant(tname, troomnum)
+                Tenant.add_tenant(my_tenant,tname, troomnum)
             elif (tOpt == 2):
-                remname = str(input("Enter the tenant name that you want to remove from the list"))
-                Tenant.remove_tenant(remname)
+                remname = str(input("Enter the tenant name that you want to remove from the list: "))
+                rem_room = str(input("Enter Tenant's room number: "))
+                Tenant.remove_tenant(my_tenant,remname,rem_room)
 
                 
         elif(user_input == 2):
