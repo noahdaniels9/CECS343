@@ -1,6 +1,6 @@
 tenant_list = {}
 class Tenant:
-    def display_tenants():
+    def display_tenants(self):
     #Displays the dictionary that contains tenants' information
         if (len(tenant_list) == 0):
             print("The list is empty.")

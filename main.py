@@ -2,42 +2,43 @@ from tenant import *
 
 
 def login():
-    print("Apartment Management System")
-    print()
-    print("Log in required")
-    print()
-    print("Name: John")
-    password = ""
-    password = input("Password: ")
-    while password != "johnsnow":
-        print("Incorrect Password")
-        password = input("Password: ")
+    print("APARTMENT MANAGEMENT SYSTEM\n"
+          "LOG IN\n")
 
-def menu(user_input):
+    print("Username: John")
+    while True:
+        password = input("Password: ")
+        if password == "johnsnow":
+            print("Login successful!\n")
+            return
+        print("Incorrect password\n")
+
+
+def menu() -> int:
     try:
-        print("Please select what you would like to display:")
+        print("MENU")
         print("1. Tenant List")
         print("2. Rental Income Record")
         print("3. Expense Record")
         print("4. Annual Summary")
-        print("5. Log Out")
-        user_input = int(input("Enter Input: "))
+        print("5. Log Out\n")
+        user_input = int(input("Your choice: "))
         return user_input
+    except ValueError:
+        print("Error: invalid input.\n")
     except:
-        print("Error: invalid input.")
+        print("Unknown Error\n")
 
 
-def main():
+if __name__ == '__main__':
     login()
-    print("Login Successful!")
-    print()
+
+    print("Welcome To Apartment Management System\n")
+
     user_input = 0
     while user_input != 5:
-        print("Welcome To Apartment Management System")
-        print()
-        user_input = menu(user_input)
+        user_input = menu()
         if (user_input == 1):
-            print()
             print("Displaying Tenant List")
             my_tenant = Tenant()
             my_tenant.display_tenants()
@@ -79,5 +80,3 @@ def main():
             print("1. return to main menu")
 
     print("Successfully Logged out!")
-
-main()
