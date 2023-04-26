@@ -16,9 +16,13 @@ class Room:
         pass
 
     @staticmethod
-    def add_room(room, file):
+    def add_room():
         pass
 
     @staticmethod
     def remove_room():
+        pass
+
+    @staticmethod
+    def read_from_database(room_filename):
         pass

@@ -11,3 +11,7 @@ class Payment:
         # table = [["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], self.payment_list]
         # print(tabulate(table))
         pass
+
+    @classmethod
+    def read_from_database(cls, payment_filename):
+        pass

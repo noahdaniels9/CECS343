@@ -9,6 +9,7 @@ room_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343 Project/Rooms.txt
 payment_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343 Project/Payments.txt"
 expense_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343 Project/Expenses.txt"
 
+
 def login():
     """Handles logging in"""
     print("APARTMENT MANAGEMENT SYSTEM\n"
@@ -46,7 +47,7 @@ def main_menu() -> int:
         print("Invalid choice.\n")
 
 
-def tenant_management():
+def tenant_management():  # DONE
     """
     Handles all operations regarding tenants, including display, add and remove tenant.
     """
@@ -96,6 +97,9 @@ if __name__ == '__main__':
 
     # Load all data from database
     Tenant.read_from_database(tenant_filename)
+    Room.read_from_database(room_filename)
+    Payment.read_from_database(payment_filename)
+    Expense.read_from_database(expense_filename)
 
     while True:
         choice = main_menu()

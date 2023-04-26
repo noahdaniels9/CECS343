@@ -1,5 +1,10 @@
 class Expense:
     amount = 0
 
-    def add_expense(self):
+    @staticmethod
+    def add_expense():
+        pass
+
+    @staticmethod
+    def read_from_database(expense_filename):
         pass
