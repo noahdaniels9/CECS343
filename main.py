@@ -3,6 +3,7 @@ from room import *
 from payment import *
 from expense import *
 
+# The path to all database files
 tenant_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343 Project/Tenants.txt"
 room_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343 Project/Rooms.txt"
 payment_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343 Project/Payments.txt"
@@ -23,8 +24,8 @@ def login():
 
 
 def main_menu() -> int:
-    """Handles displaying program's menu"""
-    choice = input("MENU\n"
+    """Handles displaying program's main menu"""
+    choice = input("\nMENU\n"
                    "1. Tenant Management\n"
                    "2. Rental Income Management\n"
                    "3. Expense Management\n"
@@ -50,9 +51,9 @@ def tenant_management():
     Handles all operations regarding tenants, including display, add and remove tenant.
     """
     # Get user choice and call corresponding functions
-    choice = Tenant.tenant_menu()
-
     while True:
+        choice = Tenant.tenant_menu()
+
         if choice == 1:
             Tenant.display_all()
         elif choice == 2:
@@ -91,7 +92,7 @@ def reports():
 
 if __name__ == '__main__':
     login()
-    print("Welcome To Apartment Management System\n")
+    print("Welcome To Apartment Management System")
 
     # Load all data from database
     Tenant.read_from_database(tenant_filename)

@@ -3,8 +3,8 @@ tenant_dict = {}
 
 
 class Tenant:
-    name: str = ""
-    room: int = 0
+    name: str
+    room: int
 
     def __init__(self, name, room):
         self.name = name
@@ -17,6 +17,7 @@ class Tenant:
 
     @staticmethod
     def read_from_database(tenant_filename):
+        """Read all tenant information from the database into memory"""
         with open(tenant_filename, 'r') as fp:
             reader = csv.reader(fp, delimiter=',')
             for row in reader:
@@ -24,6 +25,7 @@ class Tenant:
 
     @staticmethod
     def write_to_database(tenant_filename):
+        """Write all tenant information from memory into the database"""
         with open(tenant_filename, 'w') as fp:
             writer = csv.writer(fp, delimiter=',')
             for k, v in tenant_dict.items():
@@ -31,7 +33,8 @@ class Tenant:
 
     @staticmethod
     def tenant_menu() -> int:
-        choice = input("TENANT MANAGEMENT\n"
+        """Display all available menu options for managing tenants"""
+        choice = input("\nTENANT MANAGEMENT\n"
                        "1. Display all tenants\n"
                        "2. Add a new tenant\n"
                        "3. Remove a tenant\n"
@@ -52,13 +55,16 @@ class Tenant:
 
     @staticmethod
     def display_all():
+        """Display tenant information from memory to the console"""
         print("TENANT LIST")
         for k, v in tenant_dict.items():
             print(f"{k}: {v}")
 
     @staticmethod
     def add_tenant():
-        Tenant.display_all()
+        """Add a tenant to tenant dictionary in memory
+        It will overwrite room number if the name already exist, so it also acts as an update function"""
+        print("ADDING A NEW TENANT")
         tenant_name = input("Name: ")
         room_number = input("Room number: ")
 
@@ -66,8 +72,15 @@ class Tenant:
 
     @staticmethod
     def remove_tenant():
+        """Remove a tenant from the tenant dictionary in memory."""
         Tenant.display_all()
+        print("\nREMOVING A TENANT")
         tenant_name = input("Name: ")
+
+        try:
+            tenant_dict.pop(tenant_name)
+        except KeyError:
+            print("Tenant not found! Try entering a full name.")
 
 
 
