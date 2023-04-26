@@ -1,4 +1,4 @@
-
+room_Dict = {}
 class Room:
     number: int = 0
     rent: float = 0
@@ -13,7 +13,14 @@ class Room:
               f'Rent: ${self.rent}')
 
     def adjust_rent(self):
-        pass
+        try:
+            for i in room_Dict:
+                print(i, room_Dict[i])
+            roomNum = input("For what room do you want to change the rent amount?:")
+            newRent = input("Enter the rent amount that you want to adjust to: $")
+            room_Dict[roomNum] = newRent
+        except:
+            print("An unexpected error has occured. Try again.")
 
     @staticmethod
     def add_room():
