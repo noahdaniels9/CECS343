@@ -4,10 +4,10 @@ from payment import *
 from expense import *
 
 # The path to all database files
-tenant_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343 Project/Tenants.txt"
-room_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343 Project/Rooms.txt"
-payment_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343 Project/Payments.txt"
-expense_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343 Project/Expenses.txt"
+tenant_filename = "#FIX- add your own path for text files"
+room_filename = "#FIX- add your own path for text files"
+payment_filename = "#FIX- add your own path for text files"
+expense_filename = "#FIX- add your own path for text files"
 
 
 def login():
