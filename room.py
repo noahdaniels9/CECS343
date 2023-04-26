@@ -1,9 +1,24 @@
+
 class Room:
-    def display_room(self):
+    number: int = 0
+    rent: float = 0
+
+    def __init__(self, number, rent):
+        self.number = number
+        self.rent = rent
+
+    def display(self):
+        """Display this room's information"""
+        print(f'Room number: {self.number}\n'
+              f'Rent: ${self.rent}')
+
+    def adjust_rent(self):
         pass
 
-    def add_new_room(self):
+    @staticmethod
+    def add_room(room, file):
         pass
 
-    def remove_new_room(self):
+    @staticmethod
+    def remove_room():
         pass

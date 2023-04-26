@@ -1,7 +1,15 @@
 from tenant import *
+from room import *
+from payment import *
+from expense import *
 
+tenant_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343 Project/Tenants.txt"
+room_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343 Project/Rooms.txt"
+payment_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343 Project/Payments.txt"
+expense_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343 Project/Expenses.txt"
 
 def login():
+    """Handles logging in"""
     print("APARTMENT MANAGEMENT SYSTEM\n"
           "LOG IN\n")
 
@@ -14,69 +22,92 @@ def login():
         print("Incorrect password\n")
 
 
-def menu() -> int:
+def main_menu() -> int:
+    """Handles displaying program's menu"""
+    choice = input("MENU\n"
+                   "1. Tenant Management\n"
+                   "2. Rental Income Management\n"
+                   "3. Expense Management\n"
+                   "4. Annual Summary\n"
+                   "5. Log Out\n\n"
+                   "Your choice: ")
+
+    # Check if choice is a number
     try:
-        print("MENU")
-        print("1. Tenant List")
-        print("2. Rental Income Record")
-        print("3. Expense Record")
-        print("4. Annual Summary")
-        print("5. Log Out\n")
-        user_input = int(input("Your choice: "))
-        return user_input
+        choice = int(choice)
     except ValueError:
-        print("Error: invalid input.\n")
-    except:
-        print("Unknown Error\n")
+        print("Please enter a number.")
+
+    # Check if choice is in range
+    if choice in range(6):
+        return choice
+    else:
+        print("Invalid choice.\n")
+
+
+def tenant_management():
+    """
+    Handles all operations regarding tenants, including display, add and remove tenant.
+    """
+    # Get user choice and call corresponding functions
+    choice = Tenant.tenant_menu()
+
+    while True:
+        if choice == 1:
+            Tenant.display_all()
+        elif choice == 2:
+            Tenant.add_tenant()
+        elif choice == 3:
+            Tenant.remove_tenant()
+        elif choice == 4:
+            break
+
+    # Update changes to database
+    if choice == 2 or choice == 3:
+        Tenant.write_to_database(tenant_filename)
+
+
+def payment_management():
+    """
+    Handles all operations regarding payments, including display all payments, record a payment and change rent.
+    """
+    pass
+
+
+def expense_management():
+    """
+    Handles all operations regarding expense, including display all expenses and record an expense.
+    """
+    pass
+
+
+def reports():
+    """
+    Handles all operations regarding reports, including all payment records, all expense records, expenses by
+    categories, profits and losses
+    """
+    pass
 
 
 if __name__ == '__main__':
     login()
-
     print("Welcome To Apartment Management System\n")
 
-    user_input = 0
-    while user_input != 5:
-        user_input = menu()
-        if (user_input == 1):
-            print("Displaying Tenant List")
-            my_tenant = Tenant()
-            my_tenant.display_tenants()
-            print()
-            print("1. add new tenant\n2. remove existing tenants\n3. return to main menu")
-            tOpt = int(input("Enter Number: "))
-            if (tOpt == 1):
-                tname = str(input("Enter tenant name that you want to add:"))
-                troomnum = int(input("Enter tenant room number that you want to add:"))
-                Tenant.add_tenant(my_tenant,tname, troomnum)
-            elif (tOpt == 2):
-                remname = str(input("Enter the tenant name that you want to remove from the list: "))
-                rem_room = str(input("Enter Tenant's room number: "))
-                Tenant.remove_tenant(my_tenant,remname,rem_room)
+    # Load all data from database
+    Tenant.read_from_database(tenant_filename)
 
-                
-        elif(user_input == 2):
-            print("Displaying Rental Income record")
-            #add display function for rent income record(apartment number, respective rent)
-            print()
-            print("1. add new payment")
-            print("2. add new rooms")
-            print("3. remove existing room")
-            print("4. return to main menu")
+    while True:
+        choice = main_menu()
 
-        elif (user_input == 3):
-            print("Displaying Expense Record")
-            #add display function for expense record(date, payee, amount, category)
-            print()
-            print("1. add new expense")
-            print("2. return to main menu")
+        if choice == 5:
+            print("Logging out...")
+            break
 
-        elif (user_input == 4):
-            print("Displaying Annual Summary")
-            #add display function for annual summary(year, total income, total expense, profit/loss)
-            print("total profit/loss: ")
-            print()
-            #add option to choose from
-            print("1. return to main menu")
-
-    print("Successfully Logged out!")
+        if choice == 1:
+            tenant_management()
+        elif choice == 2:
+            payment_management()
+        elif choice == 3:
+            expense_management()
+        elif choice == 4:
+            reports()

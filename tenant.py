@@ -1,32 +1,75 @@
-tenant_list = {}
+import csv
+tenant_dict = {}
+
+
 class Tenant:
-    def display_tenants(self):
-    #Displays the dictionary that contains tenants' information
-        if (len(tenant_list) == 0):
-            print("The list is empty.")
+    name: str = ""
+    room: int = 0
+
+    def __init__(self, name, room):
+        self.name = name
+        self.room = room
+
+    def display(self):
+        """Display this tenant's information"""
+        print(f"Name : {self.name}\n"
+              f"Room number: {self.room}")
+
+    @staticmethod
+    def read_from_database(tenant_filename):
+        with open(tenant_filename, 'r') as fp:
+            reader = csv.reader(fp, delimiter=',')
+            for row in reader:
+                tenant_dict[row[0]] = int(row[1])
+
+    @staticmethod
+    def write_to_database(tenant_filename):
+        with open(tenant_filename, 'w') as fp:
+            writer = csv.writer(fp, delimiter=',')
+            for k, v in tenant_dict.items():
+                writer.writerow([k, v])
+
+    @staticmethod
+    def tenant_menu() -> int:
+        choice = input("TENANT MANAGEMENT\n"
+                       "1. Display all tenants\n"
+                       "2. Add a new tenant\n"
+                       "3. Remove a tenant\n"
+                       "4. Return to main menu\n\n"
+                       "Your choice: ")
+
+        # Check if choice is a number
+        try:
+            choice = int(choice)
+        except ValueError:
+            print("Please enter a number.")
+
+        # Check if choice is in range
+        if choice in range(5):
+            return choice
         else:
-            for i in tenant_list:
-                print("Name:", i, ", Room number:", tenant_list[i])
+            print("Invalid choice.\n")
 
-    def add_tenant(self,name, roomnum):
-        tenant_file = open(self.tenant_list_file, 'a')
-        tenant_file.write(name + "\n")
-        tenant_file.close()
+    @staticmethod
+    def display_all():
+        print("TENANT LIST")
+        for k, v in tenant_dict.items():
+            print(f"{k}: {v}")
 
-        room_file = open(self.room_list_file, 'a')
-        room_file.write(str(roomnum)+ "\n")
-        room_file.close()
+    @staticmethod
+    def add_tenant():
+        Tenant.display_all()
+        tenant_name = input("Name: ")
+        room_number = input("Room number: ")
 
-    def remove_tenant(self,name,room):
-        with open("Tenantlist.txt", "r") as f:
-            lines = f.readlines()
-        with open("Tenantlist.txt", "w") as f:
-            for line in lines:
-                if line.strip() != name:
-                    f.write(line)
-        with open("Roomlist.txt", "r") as f:
-            lines = f.readlines()
-        with open("Roomlist.txt", "w") as f:
-            for line in lines:
-                if line.strip() != room:
-                    f.write(line)
+        tenant_dict[tenant_name] = room_number
+
+    @staticmethod
+    def remove_tenant():
+        Tenant.display_all()
+        tenant_name = input("Name: ")
+
+
+
+
+
