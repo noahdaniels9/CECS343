@@ -35,10 +35,9 @@ class Tenant:
     def tenant_menu() -> int:
         """Display all available menu options for managing tenants"""
         choice = input("\nTENANT MANAGEMENT\n"
-                       "1. Display all tenants\n"
-                       "2. Add a new tenant\n"
-                       "3. Remove a tenant\n"
-                       "4. Return to main menu\n\n"
+                       "1. Add a new tenant\n"
+                       "2. Remove a tenant\n"
+                       "3. Return to main menu\n\n"
                        "Your choice: ")
 
         # Check if choice is a number
@@ -48,7 +47,7 @@ class Tenant:
             print("Please enter a number.")
 
         # Check if choice is in range
-        if choice in range(5):
+        if choice in range(4):
             return choice
         else:
             print("Invalid choice.\n")

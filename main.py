@@ -53,19 +53,18 @@ def tenant_management():  # DONE
     """
     # Get user choice and call corresponding functions
     while True:
+        Tenant.display_all()
         choice = Tenant.tenant_menu()
 
         if choice == 1:
-            Tenant.display_all()
-        elif choice == 2:
             Tenant.add_tenant()
-        elif choice == 3:
+        elif choice == 2:
             Tenant.remove_tenant()
-        elif choice == 4:
+        elif choice == 3:
             break
 
     # Update changes to database
-    if choice == 2 or choice == 3:
+    if choice == 1 or choice == 2:
         Tenant.write_to_database(tenant_filename)
 
 
