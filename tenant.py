@@ -56,8 +56,9 @@ class Tenant:
     def display_all():
         """Display tenant information from memory to the console"""
         print("TENANT LIST")
+        print("Apartment Number\tTenant Name")
         for k, v in tenant_dict.items():
-            print(f"{k}: {v}")
+            print(f"\t{v}\t\t\t\t{k}")
 
     @staticmethod
     def add_tenant():
