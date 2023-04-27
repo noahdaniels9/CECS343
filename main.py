@@ -3,33 +3,33 @@ from room import *
 from payment import *
 from expense import *
 from termcolor import colored
-from display import *
+from helper import *
 
 # The path to all database files
-tenant_filename = "#FIX- add your own path for text files"
-room_filename = "#FIX- add your own path for text files"
-payment_filename = "#FIX- add your own path for text files"
-expense_filename = "#FIX- add your own path for text files"
+tenant_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Tenants.txt"
+room_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Rooms.txt"
+payment_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Payments.txt"
+expense_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Expenses.txt"
 
 
 def login():
     """Handles logging in"""
-    print(colored("APARTMENT MANAGEMENT SYSTEM".center(Width.full), Color.primary, attrs=["bold", "underline"]))
-    print(colored("LOGIN\n".center(Width.full), Color.secondary))
+    print_color("APARTMENT MANAGEMENT SYSTEM", "first")
+    print_color("LOG IN", "third")
 
     print("Username: John")
     while True:
         password = input("Password: ")
         if password == "johnsnow":
-            print(colored("Login successful!\n".center(Width.full), Color.success))
+            print_color("Login successful!\n", "success")
             return
-        print(colored("Incorrect password\n".center(Width.full), Color.error))
+        print_color("Incorrect password\n", "error")
 
 
 def main_menu() -> int:
     """Handles displaying program's main menu"""
-    print(colored("APARTMENT MANAGEMENT SYSTEM".center(Width.full), Color.primary, attrs=["bold", "underline"]))
-    print(colored("MENU\n".center(Width.full), Color.secondary))
+    print_color("APARTMENT MANAGEMENT SYSTEM", "first")
+    print_color("MENU", "third")
 
     choice = input("1. Tenant Management\n"
                    "2. Rental Income Management\n"
@@ -39,16 +39,8 @@ def main_menu() -> int:
                    "Your choice: ")
 
     # Check if choice is a number
-    try:
-        choice = int(choice)
-    except ValueError:
-        print(colored("Please enter a number".center(Width.full), Color.error))
-    else:
-        # Check if choice is in range
-        if choice in range(6):
-            return choice
-        else:
-            print(colored("Invalid choice".center(Width.full), Color.error))
+    if validate_input(choice, 6):
+        return int(choice)
 
 
 def tenant_management():  # DONE
@@ -83,7 +75,21 @@ def expense_management():
     """
     Handles all operations regarding expense, including display all expenses and record an expense.
     """
-    pass
+    # Get user choice and call corresponding functions
+    while True:
+        Expense.display_all()
+        choice = Expense.expense_menu()
+
+        if choice == 1:
+            Expense.add_expense()
+        elif choice == 2:
+            Expense.remove_expense()
+        elif choice == 3:
+            break
+
+        # Update changes to database
+        if choice == 1 or choice == 2:
+            Expense.write_to_database(expense_filename)
 
 
 def reports():
@@ -107,7 +113,7 @@ if __name__ == '__main__':
         choice = main_menu()
 
         if choice == 5:
-            print("Logging out...")
+            print_color("LOGGED OUT", "success")
             break
 
         if choice == 1:
