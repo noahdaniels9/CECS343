@@ -1,5 +1,10 @@
 import csv
-tenant_dict = {}
+from termcolor import colored
+from tabulate import tabulate
+from display import *
+
+# List of tenant objects read from file
+tenant_list = []
 
 
 class Tenant:
@@ -9,6 +14,10 @@ class Tenant:
     def __init__(self, name, room):
         self.name = name
         self.room = room
+
+    def __iter__(self):
+        for attribute in [self.name, self.room]:
+            yield attribute
 
     def display(self):
         """Display this tenant's information"""
@@ -21,21 +30,23 @@ class Tenant:
         with open(tenant_filename, 'r') as fp:
             reader = csv.reader(fp, delimiter=',')
             for row in reader:
-                tenant_dict[row[0]] = int(row[1])
+                tenant_list.append(Tenant(row[0], row[1]))
 
     @staticmethod
     def write_to_database(tenant_filename):
         """Write all tenant information from memory into the database"""
         with open(tenant_filename, 'w') as fp:
             writer = csv.writer(fp, delimiter=',')
-            for k, v in tenant_dict.items():
-                writer.writerow([k, v])
+            for tenant in tenant_list:
+                writer.writerow([tenant.name, tenant.room])
 
     @staticmethod
     def tenant_menu() -> int:
         """Display all available menu options for managing tenants"""
-        choice = input("\nTENANT MANAGEMENT\n"
-                       "1. Add a new tenant\n"
+        print(colored("TENANT MANAGEMENT".center(Width.full), Color.primary, attrs=["bold", "underline"]))
+        print(colored("MENU\n".center(Width.full), Color.secondary))
+
+        choice = input("1. Add a new tenant\n"
                        "2. Remove a tenant\n"
                        "3. Return to main menu\n\n"
                        "Your choice: ")
@@ -44,21 +55,19 @@ class Tenant:
         try:
             choice = int(choice)
         except ValueError:
-            print("Please enter a number.")
-
-        # Check if choice is in range
-        if choice in range(4):
-            return choice
+            print(colored("Please enter a number".center(Width.full), Color.error))
         else:
-            print("Invalid choice.\n")
+            # Check if choice is in range
+            if choice in range(4):
+                return choice
+            else:
+                print(colored("Invalid choice".center(Width.full), Color.error))
 
     @staticmethod
     def display_all():
         """Display tenant information from memory to the console"""
-        print("TENANT LIST")
-        print("Apartment Number\tTenant Name")
-        for k, v in tenant_dict.items():
-            print(f"\t{v}\t\t\t\t{k}")
+        print(colored("TENANT LIST".center(Width.full), attrs=["underline"]))
+        print(tabulate(tenant_list, headers="firstrow", tablefmt="rounded_grid"))
 
     @staticmethod
     def add_tenant():
@@ -68,21 +77,14 @@ class Tenant:
         tenant_name = input("Name: ")
         room_number = input("Room number: ")
 
-        tenant_dict[tenant_name] = room_number
+        tenant_list.append(Tenant(tenant_name, room_number))
 
     @staticmethod
     def remove_tenant():
         """Remove a tenant from the tenant dictionary in memory."""
-        Tenant.display_all()
         print("\nREMOVING A TENANT")
-        tenant_name = input("Name: ")
+        name_to_delete = input("Name: ")
 
-        try:
-            tenant_dict.pop(tenant_name)
-        except KeyError:
-            print("Tenant not found! Try entering a full name.")
-
-
-
-
-
+        for tenant in tenant_list:
+            if tenant.name == name_to_delete:
+                tenant_list.remove(tenant)
