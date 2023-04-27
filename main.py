@@ -2,6 +2,8 @@ from tenant import *
 from room import *
 from payment import *
 from expense import *
+from termcolor import colored
+from display import *
 
 # The path to all database files
 tenant_filename = "#FIX- add your own path for text files"
@@ -12,22 +14,24 @@ expense_filename = "#FIX- add your own path for text files"
 
 def login():
     """Handles logging in"""
-    print("APARTMENT MANAGEMENT SYSTEM\n"
-          "LOG IN\n")
+    print(colored("APARTMENT MANAGEMENT SYSTEM".center(Width.full), Color.primary, attrs=["bold", "underline"]))
+    print(colored("LOGIN\n".center(Width.full), Color.secondary))
 
     print("Username: John")
     while True:
         password = input("Password: ")
         if password == "johnsnow":
-            print("Login successful!\n")
+            print(colored("Login successful!\n".center(Width.full), Color.success))
             return
-        print("Incorrect password\n")
+        print(colored("Incorrect password\n".center(Width.full), Color.error))
 
 
 def main_menu() -> int:
     """Handles displaying program's main menu"""
-    choice = input("\nMENU\n"
-                   "1. Tenant Management\n"
+    print(colored("APARTMENT MANAGEMENT SYSTEM".center(Width.full), Color.primary, attrs=["bold", "underline"]))
+    print(colored("MENU\n".center(Width.full), Color.secondary))
+
+    choice = input("1. Tenant Management\n"
                    "2. Rental Income Management\n"
                    "3. Expense Management\n"
                    "4. Annual Summary\n"
@@ -38,13 +42,13 @@ def main_menu() -> int:
     try:
         choice = int(choice)
     except ValueError:
-        print("Please enter a number.")
-
-    # Check if choice is in range
-    if choice in range(6):
-        return choice
+        print(colored("Please enter a number".center(Width.full), Color.error))
     else:
-        print("Invalid choice.\n")
+        # Check if choice is in range
+        if choice in range(6):
+            return choice
+        else:
+            print(colored("Invalid choice".center(Width.full), Color.error))
 
 
 def tenant_management():  # DONE
@@ -63,9 +67,9 @@ def tenant_management():  # DONE
         elif choice == 3:
             break
 
-    # Update changes to database
-    if choice == 1 or choice == 2:
-        Tenant.write_to_database(tenant_filename)
+        # Update changes to database
+        if choice == 1 or choice == 2:
+            Tenant.write_to_database(tenant_filename)
 
 
 def payment_management():
@@ -92,7 +96,6 @@ def reports():
 
 if __name__ == '__main__':
     login()
-    print("Welcome To Apartment Management System")
 
     # Load all data from database
     Tenant.read_from_database(tenant_filename)
