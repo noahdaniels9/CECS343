@@ -6,10 +6,10 @@ from termcolor import colored
 from helper import *
 
 # The path to all database files
-tenant_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Tenants.txt"
-room_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Rooms.txt"
-payment_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Payments.txt"
-expense_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Expenses.txt"
+tenant_filename = "ur own file path"
+room_filename = "ur own file path"
+payment_filename = "ur own file path"
+expense_filename = "ur own file path"
 
 
 def login():
@@ -31,10 +31,10 @@ def main_menu() -> int:
     print_color("APARTMENT MANAGEMENT SYSTEM", "first")
     print_color("MENU", "third")
 
-    choice = input("1. Tenant Management\n"
-                   "2. Rental Income Management\n"
-                   "3. Expense Management\n"
-                   "4. Annual Summary\n"
+    choice = input("1. Display Tenant List\n"
+                   "2. Display Rental Income Record\n"
+                   "3. Display Expense Record\n"
+                   "4. Display Annual Summary\n"
                    "5. Log Out\n\n"
                    "Your choice: ")
 
