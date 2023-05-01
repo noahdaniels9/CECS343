@@ -56,6 +56,7 @@ class Room:
     @staticmethod
     def display_all():
         """Display room information from memory to the console"""
+        pass
 
     def adjust_rent(self):
         try:
