@@ -12,8 +12,7 @@ class Payment:
 
 
 
-    def add_payment(self, pay_amount):
-        self.payment_list.append(pay_amount)
+    #not sure what to do with this method
     def print_paylist(self):
         print(self.name, "'s payment list:")
         table = [["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], self.payment_list]
@@ -57,3 +56,21 @@ class Payment:
         """Display tenant information from memory to the console"""
         print_color("RENTAL INCOME RECORD", "third underline")
         print(tabulate(payment_list, headers="firstrow", tablefmt="fancy_grid"))
+
+    @staticmethod
+    def add_payment():      # may need fix
+        """Add a new room dictionary in memory"""
+        print_color("ADDING A NEW PAYMENT", "third")
+        print_color("Enter 0 to quit", "info")
+
+        pay_amount = input("Enter Amount: ")
+        if pay_amount == "0":
+            return
+
+        payment_list.append(pay_amount)
+
+    def edit_payment(self):
+        pass
+
+    def new_text_file(self):
+        pass
