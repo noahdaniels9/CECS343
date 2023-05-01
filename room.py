@@ -4,7 +4,7 @@ from helper import print_color, validate_input
 
 # List of room objects read from file
 room_list = []
-
+roomNum_list = []
 class Room:
     number: int = 0
     rent: float = 0
@@ -61,10 +61,21 @@ class Room:
     def adjust_rent(self):
         try:
             for i in room_list:
-                print(i, room_list[i])
-            roomNum = input("Enter room number to edit rent: ")
-            newRent = input("Enter the rent amount: ")
-            room_list[roomNum] = newRent
+                print(i[0], i[1])
+                roomNum_list.append(i[0])
+            while True:
+                roomNum = int(input("For what room do you want to change the rent amount?:"))
+                if (roomNum in roomNum_list):
+                    break
+                elif (roomNum not in roomNum_list):
+                    print("Error: the room number does not exist. Try again.")
+            newRent = int(input("Enter the rent amount that you want to adjust to: $"))
+            for j in range(len(room_list)):
+                if (room_list[j][0] == roomNum):
+                    room_list[j][1] = newRent
+            for h in room_list:
+                print(h[0], h[1])
+            
         except:
             print("An unexpected error has occured. Try again.")
 
