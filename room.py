@@ -62,8 +62,8 @@ class Room:
         try:
             for i in room_list:
                 print(i, room_list[i])
-            roomNum = input("For what room do you want to change the rent amount?:")
-            newRent = input("Enter the rent amount that you want to adjust to: $")
+            roomNum = input("Enter room number to edit rent: ")
+            newRent = input("Enter the rent amount: ")
             room_list[roomNum] = newRent
         except:
             print("An unexpected error has occured. Try again.")
