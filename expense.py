@@ -1,5 +1,5 @@
 import csv
-from datetime import datetime
+from datetime import datetime, date
 from tabulate import tabulate
 from helper import print_color, validate_input
 
@@ -42,15 +42,53 @@ class Expense:
     def display_all():
         """Display all expenses"""
         print_color("EXPENSE LIST", "third underline")
-        print(tabulate(expense_list, headers="firstrow", tablefmt="fancy_grid"))
+        print(tabulate(expense_list, headers="firstrow", tablefmt="fancy_grid", showindex=range(1, len(expense_list))))
 
     @staticmethod
     def add_expense():
-        pass
+        print_color("ADDING AN EXPENSE", "third")
+        print_color("Enter 0 to quit", "info")
+
+        choice = input("Expense date\n"
+                       "1. Today\n"
+                       "2. Custom date\n"
+                       "Your choice: ")
+
+        if validate_input(choice, 3) is False or choice == "0":
+            return
+
+        if choice == "1":
+            date = datetime.today().strftime('%Y-%m-%d')
+        elif choice == "2":
+            while True:
+                try:
+                    date = datetime.strptime(input("Input date (YYYY-MM-DD): "), '%Y-%m-%d').date()
+                except ValueError:
+                    print_color("Invalid date format.", "error")
+                else:
+                    break
+
+        payee = input("Payee: ")
+        amount = input("Amount: ")
+        category = input("Category: ")
+
+        expense_list.append(Expense(date, payee, amount, category))
 
     @staticmethod
     def remove_expense():
-        pass
+        print_color("REMOVING AN EXPENSE", "third")
+        print_color("Enter 0 to quit\n", "info")
+
+        choice = input("Enter expense index number: ")
+        if choice == "0":
+            return
+
+        if validate_input(choice, len(expense_list)):
+            choice = int(choice)
+            expense_list.pop(choice)
+            print_color("Expense removed", "success")
+        else:
+            print_color("Expense not found", "error")
 
     @staticmethod
     def read_from_database(filename):
@@ -59,7 +97,7 @@ class Expense:
             reader = csv.reader(fp, delimiter=',')
             for row in reader:
                 try:
-                    date = datetime.strptime(row[0], '%Y/%m/%d').date()
+                    date = datetime.strptime(row[0], '%Y-%m-%d').date()
                 except ValueError:
                     expense_list.append(Expense(row[0], row[1], row[2], row[3]))
                 else:
