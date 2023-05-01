@@ -32,11 +32,12 @@ class Room:
         print_color("ADDING A NEW ROOM", "third")
         print_color("Enter 0 to quit", "info")
 
-        room_num = input("Name: ")
+        room_num = input("Room Number: ")
+        rent_amount = input("Rent Amount: ")
         if room_num == "0":
             return
 
-        room_list.append(Room(room_num))
+        room_list.append(Room(room_num, rent_amount))
 
     @staticmethod
     def remove_room():
