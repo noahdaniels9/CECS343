@@ -38,7 +38,7 @@ def main_menu() -> int:
                    "5. Log Out\n\n"
                    "Your choice: ")
 
-    # Check if choice is a number
+    # Check if choice is a valid
     if validate_input(choice, 6):
         return int(choice)
 
