@@ -2,7 +2,9 @@ import csv
 from tabulate import tabulate
 from helper import print_color, validate_input
 
+# List of room objects read from file
 room_list = []
+
 class Room:
     number: int = 0
     rent: float = 0
@@ -11,10 +13,49 @@ class Room:
         self.number = number
         self.rent = rent
 
+    def __iter__(self):
+        for attribute in [self.number, self.rent]:
+            yield attribute
+
     def display(self):
         """Display this room's information"""
         print(f'Room number: {self.number}\n'
               f'Rent: ${self.rent}')
+
+    @staticmethod
+    def read_from_database(filename):
+        """Read all tenant information from the database into memory"""
+        with open(filename, 'r') as fp:
+            reader = csv.reader(fp, delimiter=',')
+            for row in reader:
+                room_list.append(Room(row[0], row[1]))
+    @staticmethod
+    def write_to_database(filename):
+        """Write all tenant information from memory into the database"""
+        with open(filename, 'w') as fp:
+            writer = csv.writer(fp, delimiter=',')
+            for room in room_list:
+                writer.writerow([room.number, room.rent])
+
+    @staticmethod
+    def room_menu() -> int:
+        """Display all available menu options for managing rooms and rent"""
+        print_color("ROOM MANAGEMENT", "second")
+        print_color("MENU", "third")
+
+        choice = input("1. Add a new room\n"
+                       "2. Remove a room\n"
+                       "3. Adjust rent for a room\n"
+                       "4. Return to main menu\n\n"
+                       "Your choice: ")
+
+        # Check if choice is a good input
+        if validate_input(choice, 5):
+            return int(choice)
+
+    @staticmethod
+    def display_all():
+        """Display room information from memory to the console"""
 
     def adjust_rent(self):
         try:
@@ -56,7 +97,3 @@ class Room:
                 return
 
         print_color("Room Number not found\n", "error")
-
-    @staticmethod
-    def read_from_database(room_filename):
-        pass
