@@ -23,16 +23,16 @@ class Room:
               f'Rent: ${self.rent}')
 
     @staticmethod
-    def read_from_database(filename):
+    def read_from_database(room_filename):
         """Read all tenant information from the database into memory"""
-        with open(filename, 'r') as fp:
+        with open(room_filename, 'r') as fp:
             reader = csv.reader(fp, delimiter=',')
             for row in reader:
                 room_list.append(Room(row[0], row[1]))
     @staticmethod
-    def write_to_database(filename):
+    def write_to_database(room_filename):
         """Write all tenant information from memory into the database"""
-        with open(filename, 'w') as fp:
+        with open(room_filename, 'w') as fp:
             writer = csv.writer(fp, delimiter=',')
             for room in room_list:
                 writer.writerow([room.number, room.rent])
