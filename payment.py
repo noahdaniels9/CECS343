@@ -49,8 +49,11 @@ class Payment:
                   "july", "aug", "sep", "octo", "nov", "dec"]
         pass
 
+
     @staticmethod
     def read_from_database(filename):
+        pass
+        '''
         """Read all tenant information from the database into memory"""
         i = 0
         with open(filename, 'r') as fp:
@@ -61,11 +64,12 @@ class Payment:
                 else:
                     payment_list.append(Payment(row[0], row[1]))
                     i += 1
+    '''
 
     @staticmethod
     def write_to_database(payment_filename):
         """Write all tenant information from memory into the database"""
-        with open(payment_filename, 'w') as fp:
+        with open(payment_filename, 'w', newline='') as fp:
             writer = csv.writer(fp, delimiter=',')
             for room in payment_list:
                 writer.writerow([room.number, room.rent])
@@ -77,7 +81,7 @@ class Payment:
         print_color("MENU", "third")
 
         choice = input("1. Add a new payment\n"
-                       "2. Edit a payment"
+                       "2. Edit a payment\n"
                        "3. Make a new list for different year\n"
                        "4. Return to main menu\n\n"
                        "Your choice: ")

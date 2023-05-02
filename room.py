@@ -32,7 +32,7 @@ class Room:
     @staticmethod
     def write_to_database(room_filename):
         """Write all tenant information from memory into the database"""
-        with open(room_filename, 'w') as fp:
+        with open(room_filename, 'w', newline='') as fp:
             writer = csv.writer(fp, delimiter=',')
             for room in room_list:
                 writer.writerow([room.number, room.rent])

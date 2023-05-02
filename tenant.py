@@ -34,7 +34,7 @@ class Tenant:
     @staticmethod
     def write_to_database(filename):
         """Write all tenant information from memory into the database"""
-        with open(filename, 'w') as fp:
+        with open(filename, 'w', newline='') as fp:
             writer = csv.writer(fp, delimiter=',')
             for tenant in tenant_list:
                 writer.writerow([tenant.name, tenant.room])
