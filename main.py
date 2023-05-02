@@ -6,10 +6,10 @@ from termcolor import colored
 from helper import *
 
 # The path to all database files
-tenant_filename = "C:/Users/alexa/PycharmProjects/343Project/Tenants.txt"
-room_filename = "C:/Users/alexa/PycharmProjects/343Project/Rooms.txt"
-payment_filename = "C:/Users/alexa/PycharmProjects/343Project/Payments.txt"
-expense_filename = "C:/Users/alexa/PycharmProjects/343Project/Expenses.txt"
+tenant_filename = "ur own path"
+room_filename = "ur own path"
+payment_filename = "ur own path"
+expense_filename = "ur own path"
 
 
 def login():
@@ -68,7 +68,25 @@ def payment_management():
     """
     Handles all operations regarding payments, including display all payments, record a payment and change rent.
     """
-    pass
+
+    # Get user choice and call corresponding functions
+    while True:
+        Payment.display_all()
+        choice = Payment.payment_menu()
+
+        if choice == 1:
+            Payment.add_payment()
+        elif choice == 2:
+            Payment.edit_payment()
+        elif choice == 3:
+            Payment.new_text_file()
+        elif choice == 4:
+            break
+
+        # Update changes to database
+        if choice == 1 or choice == 2:
+            Payment.write_to_database(payment_filename)
+
 
 
 def expense_management():
