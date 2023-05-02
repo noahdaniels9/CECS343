@@ -2,6 +2,7 @@ import csv
 from datetime import datetime, date
 from tabulate import tabulate
 from helper import print_color, validate_input
+from category import category_list
 
 # List of expense objects read from file
 expense_list = []
@@ -49,7 +50,7 @@ class Expense:
         print_color("ADDING AN EXPENSE", "third")
         print_color("Enter 0 to quit", "info")
 
-        choice = input("Expense date\n"
+        choice = input("EXPENSE DATE\n"
                        "1. Today\n"
                        "2. Custom date\n"
                        "Your choice: ")
@@ -70,7 +71,25 @@ class Expense:
 
         payee = input("Payee: ")
         amount = input("Amount: ")
-        category = input("Category: ")
+
+        print("CATEGORIES")
+        print_color("Press 0 to add a new category", "info")
+        for i in range(len(category_list)):
+            print(f"{i+1}. {category_list[i-1]}")
+
+        while True:
+            choice = input("Choose category: ")
+
+            if choice == "0":
+                category = input("Enter new category: ")
+                category_list.append(category)
+                break
+
+            if validate_input(choice, len(category_list)):
+                category = category_list[int(choice)]
+                break
+            else:
+                print_color("Invalid choice", "error")
 
         expense_list.append(Expense(date, payee, amount, category))
 
