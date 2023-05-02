@@ -135,7 +135,7 @@ class Expense:
     @staticmethod
     def write_to_database(filename):
         """Write all expense information from memory into the database"""
-        with open(filename, 'w') as fp:
+        with open(filename, 'w', newline='') as fp:
             writer = csv.writer(fp, delimiter=',')
             for expense in expense_list:
                 writer.writerow([expense.date, expense.payee, expense.amount, expense.category])
