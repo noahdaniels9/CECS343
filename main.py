@@ -2,15 +2,16 @@ from tenant import *
 from room import *
 from payment import *
 from expense import *
+import category
 from termcolor import colored
 from helper import *
 
 # The path to all database files
-tenant_filename = "ur own path"
-room_filename = "ur own path"
-payment_filename = "ur own path"
-expense_filename = "ur own path"
-category_filename = "ur own path"
+tenant_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Tenants.txt"
+room_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Rooms.txt"
+payment_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Payments.txt"
+expense_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Expenses.txt"
+category_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Categories.txt"
 
 
 def login():

@@ -1,6 +1,10 @@
 Date,Payee,Amount,Category
 2023-05-01,Handyman,300,Repair
 2022-02-28,John Wick,30000,Cleanups
-2023/05/01,City,300,Fine
+2023-05-01,City,300,Fine
 2012-12-03,City,400,Fine
 2023-05-01,Gardener,100,Utility
+2023-05-02,Plumber,300,Fine
+2023-05-02,Handyman,100,Maintainance
+2020-01-31,Electrician,500,Repair
+1998-12-30,John Wick,400000,Cleanups

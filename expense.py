@@ -69,13 +69,13 @@ class Expense:
                 else:
                     break
 
-        payee = input("Payee: ")
-        amount = input("Amount: ")
+        payee = input("\nPayee: ")
+        amount = input("\nAmount: ")
 
-        print("CATEGORIES")
-        print_color("Press 0 to add a new category", "info")
+        print("\nCATEGORIES")
+        print("Press 0 to add a new category")
         for i in range(len(category_list)):
-            print(f"{i+1}. {category_list[i-1]}")
+            print(f"{i+1}. {category_list[i]}")
 
         while True:
             choice = input("Choose category: ")
@@ -85,8 +85,8 @@ class Expense:
                 category_list.append(category)
                 break
 
-            if validate_input(choice, len(category_list)):
-                category = category_list[int(choice)]
+            if validate_input(choice, len(category_list)+1):
+                category = category_list[int(choice)-1]
                 break
             else:
                 print_color("Invalid choice", "error")
@@ -125,7 +125,7 @@ class Expense:
     @staticmethod
     def write_to_database(filename):
         """Write all expense information from memory into the database"""
-        with open(filename, 'w', newline='') as fp:
+        with open(filename, 'w') as fp:
             writer = csv.writer(fp, delimiter=',')
             for expense in expense_list:
                 writer.writerow([expense.date, expense.payee, expense.amount, expense.category])
