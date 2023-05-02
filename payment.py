@@ -5,6 +5,7 @@ from helper import print_color, validate_input
 # List of room objects read from file
 payment_list = []
 
+
 class Payment:
     room: int
     jan: int
@@ -53,26 +54,21 @@ class Payment:
     @staticmethod
     def read_from_database(filename):
         pass
-        '''
         """Read all tenant information from the database into memory"""
-        i = 0
         with open(filename, 'r') as fp:
             reader = csv.reader(fp, delimiter=',')
             for row in reader:
-                if i == 1:
-                    payment_list.append(Payment(row[0], row[1]))
-                else:
-                    payment_list.append(Payment(row[0], row[1]))
-                    i += 1
-    '''
+                payment_list.append(Payment(row[0], row[1], row[2], row[3], row[4], row[5], row[6],
+                                            row[7], row[8], row[9], row[10], row[11], row[12]))
 
     @staticmethod
     def write_to_database(payment_filename):
         """Write all tenant information from memory into the database"""
         with open(payment_filename, 'w', newline='') as fp:
             writer = csv.writer(fp, delimiter=',')
-            for room in payment_list:
-                writer.writerow([room.number, room.rent])
+            for rooms in payment_list:
+                writer.writerow([rooms.room, rooms.jan, rooms.feb, rooms.march, rooms.april, rooms.may, rooms.june,
+                                 rooms.july, rooms.aug, rooms.sept, rooms.octo, rooms.nov, rooms.dec])
 
     @staticmethod
     def payment_menu() -> int:
@@ -102,11 +98,24 @@ class Payment:
         print_color("ADDING A NEW PAYMENT", "third")
         print_color("Enter 0 to quit", "info")
 
-        pay_amount = input("Enter Amount: ")
-        if pay_amount == "0":
+        room_number = input("Room number: ")
+        if room_number == "0":
             return
+        jan_pay = input("January Payment:")
+        feb_pay = input("February Payment:")
+        march_pay = input("March Payment:")
+        april_pay = input("April Payment:")
+        may_pay = input("May Payment:")
+        june_pay = input("June Payment:")
+        july_pay = input("July Payment:")
+        aug_pay = input("August Payment:")
+        sept_pay = input("September Payment:")
+        octo_pay = input("October Payment:")
+        nov_pay = input("November Payment:")
+        dec_pay = input("December Payment")
 
-        payment_list.append(pay_amount)
+        payment_list.append(Payment(room_number, jan_pay, feb_pay, march_pay, april_pay, may_pay, june_pay,
+                                    july_pay, aug_pay, sept_pay, octo_pay, nov_pay, dec_pay))
 
     def edit_payment(self):
         pass
