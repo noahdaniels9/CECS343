@@ -3,8 +3,8 @@ from room import *
 from payment import *
 from expense import *
 import category
-from termcolor import colored
 from helper import *
+import pandas as pd
 
 # The path to all database files
 tenant_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Tenants.txt"
@@ -90,8 +90,7 @@ def payment_management():
             Payment.write_to_database(payment_filename)
 
 
-
-def expense_management():
+def expense_management(): # DONE
     """
     Handles all operations regarding expense, including display all expenses and record an expense.
     """
@@ -118,7 +117,19 @@ def reports():
     Handles all operations regarding reports, including all payment records, all expense records, expenses by
     categories, profits and losses
     """
-    pass
+    print_color("ANNUAL REPORTS", "second")
+    print_color("SUMMARY", "third")
+
+    all_payments = Payment.sum_all_payments()
+    all_expenses = Expense.sum_all_expenses()
+    profit = all_payments - all_expenses
+
+    print(tabulate([["TOTAL INCOME", f"${all_payments}"],
+                    ["TOTAL EXPENSE", f"${all_expenses}"],
+                    ["PROFIT" if profit > 0 else "LOSS", f"${profit}"]], tablefmt="rounded_grid"))
+
+    print_color("EXPENSE BY CATEGORY", "third")
+    print(tabulate(Expense.sum_expenses_by_category().items(), tablefmt="rounded_grid"))
 
 
 if __name__ == '__main__':
