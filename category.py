@@ -12,8 +12,9 @@ def read_from_database(filename):
 
 def write_to_database(filename):
     """Write all category information from memory into the database"""
-    with open(filename, 'w', newline='\n') as fp:
+    with open(filename, 'w') as fp:
+        writer = csv.writer(fp)
         for category in category_list:
-            fp.write(category)
+            writer.writerow([category])
 
 

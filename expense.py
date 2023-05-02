@@ -11,10 +11,10 @@ expense_list = []
 class Expense:
     date: datetime.date
     payee: str
-    amount: int
+    amount: float
     category: str
 
-    def __init__(self, date: datetime.date, payee, amount, category):
+    def __init__(self, date: datetime.date, payee, amount: float, category):
         self.date = date
         self.payee = payee
         self.amount = amount
@@ -42,7 +42,7 @@ class Expense:
     @staticmethod
     def display_all():
         """Display all expenses"""
-        print_color("EXPENSE LIST", "third underline")
+        print_color("EXPENSE RECORD", "third underline")
         print(tabulate(expense_list, headers="firstrow", tablefmt="fancy_grid", showindex=range(1, len(expense_list))))
 
     @staticmethod
@@ -69,8 +69,18 @@ class Expense:
                 else:
                     break
 
-        payee = input("\nPayee: ")
-        amount = input("\nAmount: ")
+        payee = input("\nPAYEE: ")
+
+        while True:
+            try:
+                amount = float(input("\nAMOUNT:"))
+            except ValueError:
+                print_color("Invalid amount.", "error")
+            else:
+                if amount < 0:
+                    print_color("Invalid amount.", "error")
+                    continue
+                break
 
         print("\nCATEGORIES")
         print("Press 0 to add a new category")
@@ -129,3 +139,23 @@ class Expense:
             writer = csv.writer(fp, delimiter=',')
             for expense in expense_list:
                 writer.writerow([expense.date, expense.payee, expense.amount, expense.category])
+
+    @staticmethod
+    def sum_all_expenses() -> float:
+        """Return the sum of all expenses in memory"""
+        sum_expense = 0.0
+        for expense in expense_list[1:]:
+            sum_expense += float(expense.amount)
+
+        return sum_expense
+
+    @staticmethod
+    def sum_expenses_by_category() -> dict:
+        expenses_by_category = {}
+        for expense in expense_list[1:]:
+            if expense.category in expenses_by_category:
+                expenses_by_category[expense.category] += float(expense.amount)
+            else:
+                expenses_by_category[expense.category] = float(expense.amount)
+
+        return expenses_by_category

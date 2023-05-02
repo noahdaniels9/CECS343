@@ -113,3 +113,7 @@ class Payment:
 
     def new_text_file(self):
         pass
+
+    @staticmethod
+    def sum_all_payments() -> float:
+        return 0
