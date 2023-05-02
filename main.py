@@ -10,6 +10,7 @@ tenant_filename = "ur own path"
 room_filename = "ur own path"
 payment_filename = "ur own path"
 expense_filename = "ur own path"
+category_filename = "ur own path"
 
 
 def login():
@@ -108,6 +109,7 @@ def expense_management():
         # Update changes to database
         if choice == 1 or choice == 2:
             Expense.write_to_database(expense_filename)
+            category.write_to_database(category_filename)
 
 
 def reports():
@@ -126,6 +128,8 @@ if __name__ == '__main__':
     Room.read_from_database(room_filename)
     Payment.read_from_database(payment_filename)
     Expense.read_from_database(expense_filename)
+    category.read_from_database(category_filename)
+
 
     while True:
         choice = main_menu()
