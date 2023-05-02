@@ -8,3 +8,5 @@ Date,Payee,Amount,Category
 2020-01-31,Electrician,500,Repair
 1998-12-30,John Wick,400000,Cleanups
 2012-10-02,City,400,Fine
+2023-05-02,Handyman,400.0,Repair
+2023-05-02,City,50.0,HOA

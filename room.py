@@ -5,6 +5,8 @@ from helper import print_color, validate_input
 # List of room objects read from file
 room_list = []
 roomNum_list = []
+
+
 class Room:
     number: int = 0
     rent: float = 0
@@ -25,14 +27,16 @@ class Room:
     @staticmethod
     def read_from_database(room_filename):
         """Read all tenant information from the database into memory"""
+        del room_list[:]
         with open(room_filename, 'r') as fp:
             reader = csv.reader(fp, delimiter=',')
             for row in reader:
                 room_list.append(Room(row[0], row[1]))
+
     @staticmethod
     def write_to_database(room_filename):
         """Write all tenant information from memory into the database"""
-        with open(room_filename, 'w', newline='') as fp:
+        with open(room_filename, 'w') as fp:
             writer = csv.writer(fp, delimiter=',')
             for room in room_list:
                 writer.writerow([room.number, room.rent])
@@ -56,9 +60,11 @@ class Room:
     @staticmethod
     def display_all():
         """Display room information from memory to the console"""
-        pass
+        print_color("ROOM LIST", "third underline")
+        print(tabulate(room_list, headers="firstrow", tablefmt="fancy_grid"))
 
-    def adjust_rent(self):
+    @staticmethod
+    def adjust_rent():
         try:
             for i in room_list:
                 print(i[0], i[1])
@@ -75,7 +81,7 @@ class Room:
                     room_list[j][1] = newRent
             for h in room_list:
                 print(h[0], h[1])
-            
+
         except:
             print("An unexpected error has occured. Try again.")
 
@@ -85,26 +91,40 @@ class Room:
         print_color("ADDING A NEW ROOM", "third")
         print_color("Enter 0 to quit", "info")
 
-        room_num = input("Room Number: ")
-        rent_amount = input("Rent Amount: ")
-        if room_num == "0":
+        try:
+            new_room_number = int(input("Room Number: "))
+        except ValueError:
+            print_color("Please enter a number", "error")
             return
+        else:
+            for room in room_list:
+                if room.number == str(new_room_number):
+                    print_color("Room already exist", "error")
+                    return
 
-        room_list.append(Room(room_num, rent_amount))
+        if new_room_number == "0":
+            return
+        rent_amount = input("Rent Amount: ")
+
+        room_list.append(Room(new_room_number, rent_amount))
 
     @staticmethod
-    def remove_room():
-        """Remove a room from the tenant dictionary in memory."""
+    def remove_room(tenant_list):
+        """Remove a room from the room list in memory."""
         print_color("REMOVING A ROOM", "third")
         print_color("Enter 0 to quit", "info")
 
-        name_to_delete = input("Room Number: ")
-        if name_to_delete == "0":
+        room_to_delete = input("Room Number: ")
+        if room_to_delete == "0":
             return
 
-        for i in room_list:
-            if i.name == name_to_delete:
-                room_list.remove(i)
+        for room in room_list:
+            if room.number == room_to_delete:
+                for tenant in tenant_list:
+                    if tenant.room == room_to_delete:
+                        print_color(f"Evicting tenant {tenant.name}", "success")
+                        tenant_list.remove(tenant)
+                room_list.remove(room)
                 print_color("Room removed\n", "success")
                 return
 
