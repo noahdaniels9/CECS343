@@ -6,26 +6,61 @@ from helper import print_color, validate_input
 payment_list = []
 
 class Payment:
-    def __init__(self, name):
-        self.name = name
-        self.payment_list = []
+    room: int
+    jan: int
+    feb: int
+    march: int
+    april: int
+    may: int
+    june: int
+    july: int
+    aug: int
+    sept: int
+    octo: int
+    nov: int
+    dec: int
 
+    def __init__(self, room, jan, feb, march, april, may,
+                 june, july, aug, sept, octo, nov, dec):
+        self.room = room
+        self.jan = jan
+        self.feb = feb
+        self.march = march
+        self.april = april
+        self.may = may
+        self.june = june
+        self.july = july
+        self.aug = aug
+        self.sept = sept
+        self.octo = octo
+        self.nov = nov
+        self.dec = dec
 
+    def __iter__(self):
+        for attribute in [self.room, self.jan, self.feb, self.march,
+                          self.april, self.may, self.june, self.july,
+                          self.aug, self.sept, self.octo, self.nov, self.dec]:
+            yield attribute
 
-    #not sure what to do with this method
-    def print_paylist(self):
-        print(self.name, "'s payment list:")
-        table = [["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"], self.payment_list]
-        print(tabulate(table))
+    def display(self):
+        """Display this tenant's payment"""
+        print(f"Room : {self.room}")
+        months = ["jan", "feb", "march", "april", "may", "june",
+                  "july", "aug", "sep", "octo", "nov", "dec"]
         pass
 
-    @classmethod
-    def read_from_database(cls, payment_filename):
+    @staticmethod
+    def read_from_database(filename):
         """Read all tenant information from the database into memory"""
-        with open(payment_filename, 'r') as fp:
+        i = 0
+        with open(filename, 'r') as fp:
             reader = csv.reader(fp, delimiter=',')
             for row in reader:
-                payment_list.append(Payment(row[0], row[1]))
+                if i == 1:
+                    payment_list.append(Payment(row[0], row[1]))
+                else:
+                    payment_list.append(Payment(row[0], row[1]))
+                    i += 1
 
     @staticmethod
     def write_to_database(payment_filename):
