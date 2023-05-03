@@ -59,7 +59,7 @@ class Expense:
             return
 
         if choice == "1":
-            date = datetime.today().strftime('%Y-%m-%d')
+            date = datetime.strptime(datetime.today().strftime('%Y-%m-%d'),  '%Y-%m-%d').date()
         elif choice == "2":
             while True:
                 try:
@@ -135,19 +135,27 @@ class Expense:
     @staticmethod
     def write_to_database(filename):
         """Write all expense information from memory into the database"""
-        with open(filename, 'w',newline='') as fp:
+        with open(filename, 'w') as fp:
             writer = csv.writer(fp, delimiter=',')
             for expense in expense_list:
                 writer.writerow([expense.date, expense.payee, expense.amount, expense.category])
 
     @staticmethod
-    def sum_all_expenses() -> float:
+    def sum_all_expenses(payment_list):
         """Return the sum of all expenses in memory"""
-        sum_expense = 0.0
+        all_years: set = set()
         for expense in expense_list[1:]:
-            sum_expense += float(expense.amount)
+            all_years.add(expense.date.year)
 
-        return sum_expense
+        all_expenses = []
+        for current_year in all_years:
+            annual_expense = 0
+            for expense in expense_list[1:]:
+                if expense.date.year == int(current_year):
+                    annual_expense += float(expense.amount)
+
+            all_expenses.append([str(current_year), annual_expense])
+        return all_expenses
 
     @staticmethod
     def sum_expenses_by_category() -> dict:
@@ -170,7 +178,7 @@ class Expense:
     @staticmethod
     def save_categories(filename):
         """Write all category information from memory into the database"""
-        with open(filename, 'w',newline='') as fp:
+        with open(filename, 'w') as fp:
             writer = csv.writer(fp)
             for category in category_list:
                 writer.writerow([category])
