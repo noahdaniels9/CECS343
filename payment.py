@@ -141,15 +141,13 @@ class Payment:
               "\n10-October"
               "\n11-November"
               "\n12-December")
-        month = (int(input("Which month?:"))) - 1
-        payment = input("Payment:")
+        month = (int(input("Which month?: "))) - 1
+        payment = input("Payment: ")
         'room that will have its payment edited'
         edit_room = payment_list[room_row]
         'room payment for that month is changed to new payment'
-        # Get the name of the attribute to be updated
         months_names = ['jan', 'feb', 'march', 'april', 'may', 'june', 'july', 'aug', 'sept', 'octo', 'nov', 'dec']
         month_name = months_names[month]
-        # Set the value of the attribute to the new payment amount
         setattr(edit_room, month_name, payment)
         'add updated room payment back to list'
         payment_list[room_row] = edit_room
