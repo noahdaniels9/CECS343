@@ -1,7 +1,7 @@
 Tenant name,Apartment number
-Ian Lee,106
-John Cena,107
 Vinh Huynh,101
-Shivkumar Manek,105
 Alex Garcia,102
 Noah Daniels,103
+Shivkumar Manek,104
+Ian Lee,105
+John Cena,106
