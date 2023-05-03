@@ -118,6 +118,13 @@ class Payment:
                                     july_pay, aug_pay, sept_pay, octo_pay, nov_pay, dec_pay))
 
     def edit_payment(self):
+        print_color("CHANGING PAYMENT", "third")
+        print_color("Enter 0 to quit", "info")
+
+        room_number = input("Room number: ")
+        if room_number == "0":
+            return
+
         pass
 
     def new_text_file(self):
