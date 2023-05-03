@@ -2,10 +2,10 @@ import csv
 from datetime import datetime, date
 from tabulate import tabulate
 from helper import print_color, validate_input
-from category import category_list
 
-# List of expense objects read from file
+# List of expense objects and category list read from file
 expense_list = []
+category_list = []
 
 
 class Expense:
@@ -135,7 +135,7 @@ class Expense:
     @staticmethod
     def write_to_database(filename):
         """Write all expense information from memory into the database"""
-        with open(filename, 'w', newline='') as fp:
+        with open(filename, 'w') as fp:
             writer = csv.writer(fp, delimiter=',')
             for expense in expense_list:
                 writer.writerow([expense.date, expense.payee, expense.amount, expense.category])
@@ -159,3 +159,18 @@ class Expense:
                 expenses_by_category[expense.category] = float(expense.amount)
 
         return expenses_by_category
+
+    @staticmethod
+    def load_categories(filename):
+        """Read all category information from the database into memory"""
+        with open(filename, 'r') as fp:
+            for line in fp:
+                category_list.append(line.strip())
+
+    @staticmethod
+    def save_categories(filename):
+        """Write all category information from memory into the database"""
+        with open(filename, 'w') as fp:
+            writer = csv.writer(fp)
+            for category in category_list:
+                writer.writerow([category])

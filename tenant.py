@@ -26,6 +26,7 @@ class Tenant:
     @staticmethod
     def read_from_database(filename):
         """Read all tenant information from the database into memory"""
+        del tenant_list[:]
         with open(filename, 'r') as fp:
             reader = csv.reader(fp, delimiter=',')
             for row in reader:
@@ -61,18 +62,30 @@ class Tenant:
         print(tabulate(tenant_list, headers="firstrow", tablefmt="fancy_grid"))
 
     @staticmethod
-    def add_tenant():
+    def add_tenant(room_list):
         """Add a tenant to tenant dictionary in memory
         It will overwrite room number if the name already exist, so it also acts as an update function"""
         print_color("ADDING A NEW TENANT", "third")
         print_color("Enter 0 to quit", "info")
 
-        tenant_name = input("Name: ")
+        tenant_name = input("Tenant Name: ")
         if tenant_name == "0":
             return
-        room_number = input("Room number: ")
 
-        tenant_list.append(Tenant(tenant_name, room_number))
+        try:
+            room_number = int(input("Room Number: "))
+        except ValueError:
+            print_color("Please enter a number", "error")
+            return
+        else:
+            for room in room_list:
+                if room.number == str(room_number):
+                    tenant_list.append(Tenant(tenant_name, room_number))
+                    print_color("Tenant added", "success")
+                    return
+
+            print_color("Room not exist", "error")
+
 
     @staticmethod
     def remove_tenant():
