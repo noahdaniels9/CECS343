@@ -1,5 +1,4 @@
 import csv
-import pandas as pd
 from tabulate import tabulate
 from helper import print_color, validate_input
 
