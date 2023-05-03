@@ -146,10 +146,11 @@ class Payment:
         'room that will have its payment edited'
         edit_room = payment_list[room_row]
         'room payment for that month is changed to new payment'
-        months = [edit_room.jan, edit_room.feb, edit_room.march, edit_room.april,
-                  edit_room.may, edit_room.june, edit_room.july, edit_room.aug,
-                  edit_room.sept, edit_room.octo, edit_room.nov, edit_room.dec]
-        months[month] = payment
+        # Get the name of the attribute to be updated
+        months_names = ['jan', 'feb', 'march', 'april', 'may', 'june', 'july', 'aug', 'sept', 'octo', 'nov', 'dec']
+        month_name = months_names[month]
+        # Set the value of the attribute to the new payment amount
+        setattr(edit_room, month_name, payment)
         'add updated room payment back to list'
         payment_list[room_row] = edit_room
 
