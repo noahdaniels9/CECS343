@@ -4,13 +4,13 @@ from payment import *
 from expense import *
 from helper import *
 
-
 # The path to all database files
-tenant_filename = "C:/Users/alexa/PycharmProjects/343Project/Tenants.txt"
-room_filename = "C:/Users/alexa/PycharmProjects/343Project/Rooms.txt"
-payment_filename = "C:/Users/alexa/PycharmProjects/343Project/Payments.txt"
-expense_filename = "C:/Users/alexa/PycharmProjects/343Project/Expenses.txt"
-category_filename = "C:/Users/alexa/PycharmProjects/343Project/Categories.txt"
+tenant_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Tenants.txt"
+room_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Rooms.txt"
+payment_directory = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/payments/"
+expense_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Expenses.txt"
+category_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Categories.txt"
+
 
 def login():
     """Handles logging in"""
@@ -80,6 +80,7 @@ def room_management():
             Tenant.read_from_database(tenant_filename)
             Room.remove_room(tenant_list)
         elif choice == 3:
+            Room.read_from_database(room_filename)
             Room.adjust_rent()
         elif choice == 4:
             break
@@ -98,20 +99,23 @@ def payment_management():
         choice = Payment.payment_menu()
 
         if choice == 1:
-            Payment.add_payment()
+            Payment.add_payment(room_list)
         elif choice == 2:
             Payment.edit_payment()
         elif choice == 3:
-            Payment.new_text_file()
+            Payment.new_text_file(payment_directory, room_list)
         elif choice == 4:
             break
 
         # Update changes to database
         if choice == 1 or choice == 2:
-            Payment.write_to_database(payment_filename)
+            Payment.write_to_database(payment_directory)
+
+        if choice == 3:
+            Payment.read_from_database(payment_directory)
 
 
-def expense_management(): # DONE
+def expense_management():  # DONE
     """
     Handles all operations regarding expense, including display all expenses and record an expense.
     """
@@ -142,15 +146,28 @@ def reports():
     print_color("SUMMARY", "third")
 
     all_payments = Payment.sum_all_payments()
-    all_expenses = Expense.sum_all_expenses()
-    profit = all_payments - all_expenses
+    all_expenses = Expense.sum_all_expenses(payment_list)
 
-    print(tabulate([["TOTAL INCOME", f"${all_payments:,}"],
-                    ["TOTAL EXPENSE", f"${all_expenses:,}"],
-                    ["PROFIT" if profit > 0 else "LOSS", f"${profit:,}"]], tablefmt="rounded_grid"))
+    print_color("INCOME REPORT", "third")
+    print(tabulate([[year[0], f"${year[1]:,}"] for year in all_payments], tablefmt="rounded_grid", headers=["YEAR", "TOTAL INCOME"]))
+
+    print_color("EXPENSE REPORT", "third")
+    print(tabulate([[year[0], f"${year[1]:,}"] for year in all_expenses], tablefmt="rounded_grid",
+                   headers=["YEAR", "TOTAL EXPENSE"]))
+
+    print_color("PROFIT AND LOSS REPORT", "third")
+    profit_table = []
+    for payment_year in all_payments:
+        current_year = payment_year[0]
+        for expense_year in all_expenses:
+            if expense_year[0] == current_year:
+                profit = float(payment_year[1]) - float(expense_year[1])
+                profit_table.append([current_year, f"${profit:,}"])
+    print(tabulate(profit_table, tablefmt="rounded_grid", headers=["YEAR", "PROFIT / LOSS"]))
 
     print_color("EXPENSE BY CATEGORY", "third")
-    print(tabulate([[key, f"${value:,}"] for key, value in Expense.sum_expenses_by_category().items()], tablefmt="rounded_grid", headers=["CATEGORY", "TOTAL"]))
+    print(tabulate([[key, f"${value:,}"] for key, value in Expense.sum_expenses_by_category().items()],
+                   tablefmt="rounded_grid", headers=["CATEGORY", "TOTAL"]))
 
 
 if __name__ == '__main__':
@@ -159,11 +176,12 @@ if __name__ == '__main__':
     # Load all data from database
     Tenant.read_from_database(tenant_filename)
     Room.read_from_database(room_filename)
-    Payment.read_from_database(payment_filename)
+    Payment.read_from_database(payment_directory)
     Expense.read_from_database(expense_filename)
     Expense.load_categories(category_filename)
 
     while True:
+        Payment.sum_all_payments()
         choice = main_menu()
 
         if choice == 6:
