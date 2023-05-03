@@ -77,7 +77,7 @@ class Payment:
         print_color("INCOME RECORD MANAGEMENT", "second")
         print_color("MENU", "third")
 
-        choice = input("1. Add a new payment\n"
+        choice = input("1. Add a new room payment setup\n"
                        "2. Edit a payment\n"
                        "3. Make a new list for different year\n"
                        "4. Return to main menu\n\n"
