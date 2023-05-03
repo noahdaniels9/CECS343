@@ -53,7 +53,6 @@ class Payment:
 
     @staticmethod
     def read_from_database(filename):
-        pass
         """Read all tenant information from the database into memory"""
         with open(filename, 'r') as fp:
             reader = csv.reader(fp, delimiter=',')
