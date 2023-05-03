@@ -102,22 +102,8 @@ class Payment:
         room_number = input("Room number: ")
         if room_number == "0":
             return
-        jan_pay = input("January Payment:")
-        feb_pay = input("February Payment:")
-        march_pay = input("March Payment:")
-        april_pay = input("April Payment:")
-        may_pay = input("May Payment:")
-        june_pay = input("June Payment:")
-        july_pay = input("July Payment:")
-        aug_pay = input("August Payment:")
-        sept_pay = input("September Payment:")
-        octo_pay = input("October Payment:")
-        nov_pay = input("November Payment:")
-        dec_pay = input("December Payment")
-
-        payment_list.append(Payment(room_number, jan_pay, feb_pay, march_pay, april_pay,
-                                    may_pay, june_pay, july_pay, aug_pay, sept_pay,
-                                    octo_pay, nov_pay, dec_pay))
+        payment_list.append(Payment(room_number, "-", "-", "-", "-",
+                                    "-", "-", "-", "-", "-", "-", "-", "-"))
 
     @staticmethod
     def edit_payment():
