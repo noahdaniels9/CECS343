@@ -1,4 +1,5 @@
 import csv
+import pandas as pd
 from tabulate import tabulate
 from helper import print_color, validate_input
 
@@ -54,6 +55,7 @@ class Payment:
     @staticmethod
     def read_from_database(filename):
         """Read all tenant information from the database into memory"""
+        del payment_list[:]
         with open(filename, 'r') as fp:
             reader = csv.reader(fp, delimiter=',')
             for row in reader:
@@ -66,8 +68,9 @@ class Payment:
         with open(payment_filename, 'w', newline='') as fp:
             writer = csv.writer(fp, delimiter=',')
             for rooms in payment_list:
-                writer.writerow([rooms.room, rooms.jan, rooms.feb, rooms.march, rooms.april, rooms.may, rooms.june,
-                                 rooms.july, rooms.aug, rooms.sept, rooms.octo, rooms.nov, rooms.dec])
+                writer.writerow([rooms.room, rooms.jan, rooms.feb, rooms.march, rooms.april,
+                                 rooms.may, rooms.june, rooms.july, rooms.aug, rooms.sept,
+                                 rooms.octo, rooms.nov, rooms.dec])
 
     @staticmethod
     def payment_menu() -> int:
@@ -113,18 +116,42 @@ class Payment:
         nov_pay = input("November Payment:")
         dec_pay = input("December Payment")
 
-        payment_list.append(Payment(room_number, jan_pay, feb_pay, march_pay, april_pay, may_pay, june_pay,
-                                    july_pay, aug_pay, sept_pay, octo_pay, nov_pay, dec_pay))
+        payment_list.append(Payment(room_number, jan_pay, feb_pay, march_pay, april_pay,
+                                    may_pay, june_pay, july_pay, aug_pay, sept_pay,
+                                    octo_pay, nov_pay, dec_pay))
 
-    def edit_payment(self):
+    @staticmethod
+    def edit_payment():
         print_color("CHANGING PAYMENT", "third")
         print_color("Enter 0 to quit", "info")
 
         room_number = input("Room number: ")
         if room_number == "0":
             return
-
-        pass
+        room_row = int(room_number) % 100
+        print("\n1-January"
+              "\n2-February"
+              "\n3-March"
+              "\n4-April"
+              "\n5-May"
+              "\n6-June"
+              "\n7-July"
+              "\n8-August"
+              "\n9-September"
+              "\n10-October"
+              "\n11-November"
+              "\n12-December")
+        month = (int(input("Which month?:"))) - 1
+        payment = input("Payment:")
+        'room that will have its payment edited'
+        edit_room = payment_list[room_row]
+        'room payment for that month is changed to new payment'
+        months = [edit_room.jan, edit_room.feb, edit_room.march, edit_room.april,
+                  edit_room.may, edit_room.june, edit_room.july, edit_room.aug,
+                  edit_room.sept, edit_room.octo, edit_room.nov, edit_room.dec]
+        months[month] = payment
+        'add updated room payment back to list'
+        payment_list[room_row] = edit_room
 
     def new_text_file(self):
         pass

@@ -6,12 +6,11 @@ from helper import *
 
 
 # The path to all database files
-tenant_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Tenants.txt"
-room_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Rooms.txt"
-payment_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Payments.txt"
-expense_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Expenses.txt"
-category_filename = "/Users/vinhhuynh/Documents/CSULB/CECS 343/343Project/Categories.txt"
-
+tenant_filename = "C:/Users/alexa/PycharmProjects/343Project/Tenants.txt"
+room_filename = "C:/Users/alexa/PycharmProjects/343Project/Rooms.txt"
+payment_filename = "C:/Users/alexa/PycharmProjects/343Project/Payments.txt"
+expense_filename = "C:/Users/alexa/PycharmProjects/343Project/Expenses.txt"
+category_filename = "C:/Users/alexa/PycharmProjects/343Project/Categories.txt"
 
 def login():
     """Handles logging in"""
